@@ -8,28 +8,37 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String location = 'San Francisco';
-  String time = 'Monday, 10:00 AM';
-  String temperature = '22°';
-  String weatherDescription = 'Sunny';
-  String windSpeed = '12 km/h';
-  String humidity = '78%';
-  String rain = '0 mm';
+  // String location = 'San Francisco';
+  // String time = 'Monday, 10:00 AM';
+  // String temperature = '22°';
+  // String weatherDescription = 'Sunny';
+  // String windSpeed = '12 km/h';
+  // String humidity = '78%';
+  // String rain = '0 mm';
+  Map<String, String> weatherData = {
+    'location': 'San Francisco',
+    'time': 'Monday, 10:00 AM',
+    'temperature': '22°',
+    'weatherDescription': 'Sunny',
+    'windSpeed': '12 km/h',
+    'humidity': '78%',
+    'rain': '0 mm',
+  };
 
   @override
   Widget build(BuildContext context) {
 
     // Check if arguments are passed from Navigator.pop and update state
-    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-    if (args != null) {
-      location = args['location'] ?? location;
-      time = args['time'] ?? time;
-      temperature = args['temperature'] ?? temperature;
-      weatherDescription = args['weatherDescription'] ?? weatherDescription;
-      windSpeed = args['windSpeed'] ?? windSpeed;
-      humidity = args['humidity'] ?? humidity;
-      rain = args['rain'] ?? rain;
-    }
+    // final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    // if (args != null) {
+    //   location = args['location'] ?? location;
+    //   time = args['time'] ?? time;
+    //   temperature = args['temperature'] ?? temperature;
+    //   weatherDescription = args['weatherDescription'] ?? weatherDescription;
+    //   windSpeed = args['windSpeed'] ?? windSpeed;
+    //   humidity = args['humidity'] ?? humidity;
+    //   rain = args['rain'] ?? rain;
+    // }
     return Scaffold(
       backgroundColor: Colors.blue[100],
       appBar: AppBar(
@@ -74,11 +83,14 @@ class _HomeState extends State<Home> {
                   shadowColor: Colors.transparent,
                   elevation: 0,
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/chooselocation');
+                onPressed: () async {
+                  dynamic data = await Navigator.pushNamed(context, '/chooselocation');
+                  setState(() {
+                    weatherData = {...weatherData, ...data};
+                  });
                 },
                 child: Text(
-                  location,
+                  weatherData['location'] ?? '',
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
@@ -87,13 +99,13 @@ class _HomeState extends State<Home> {
                 ),
               ),
               const SizedBox(height: 8),
-              Text(time, style: TextStyle(fontSize: 16, color: Colors.grey)),
+              Text(weatherData['time'] ?? '', style: TextStyle(fontSize: 16, color: Colors.grey)),
               const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    temperature,
+                    weatherData['temperature'] ?? '',
                     style: TextStyle(
                       fontSize: 64,
                       fontWeight: FontWeight.bold,
@@ -109,7 +121,7 @@ class _HomeState extends State<Home> {
               ),
               const SizedBox(height: 16),
               Text(
-                weatherDescription,
+                weatherData['weatherDescription'] ?? '',
                 style: TextStyle(
                   fontSize: 22,
                   color: Colors.amber,
@@ -126,7 +138,7 @@ class _HomeState extends State<Home> {
                       SizedBox(height: 4),
                       Text('Wind', style: TextStyle(color: Colors.black54)),
                       Text(
-                        windSpeed,
+                        weatherData['windSpeed'] ?? '',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -137,7 +149,7 @@ class _HomeState extends State<Home> {
                       SizedBox(height: 4),
                       Text('Humidity', style: TextStyle(color: Colors.black54)),
                       Text(
-                        humidity,
+                        weatherData['humidity'] ?? '',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -147,7 +159,7 @@ class _HomeState extends State<Home> {
                       Icon(Icons.umbrella, color: Colors.blue, size: 28),
                       SizedBox(height: 4),
                       Text('Rain', style: TextStyle(color: Colors.black54)),
-                      Text(rain, style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(weatherData['rain'] ?? '', style: TextStyle(fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ],

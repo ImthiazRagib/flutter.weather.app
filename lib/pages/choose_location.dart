@@ -7,8 +7,15 @@ class ChooseLocation extends StatefulWidget {
   State<ChooseLocation> createState() => _ChooseLocationState();
 }
 
-class _ChooseLocationState extends State<ChooseLocation> with SingleTickerProviderStateMixin {
-  final List<String> locations = ['New York', 'London', 'Tokyo', 'Sydney', 'Paris'];
+class _ChooseLocationState extends State<ChooseLocation>
+    with SingleTickerProviderStateMixin {
+  final List<String> locations = [
+    'New York',
+    'London',
+    'Tokyo',
+    'Sydney',
+    'Paris',
+  ];
   String? location;
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
@@ -35,8 +42,10 @@ class _ChooseLocationState extends State<ChooseLocation> with SingleTickerProvid
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Choose Location',
-            style: TextStyle(color: Colors.white)),
+        title: const Text(
+          'Choose Location',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.blue[400],
         elevation: 0,
       ),
@@ -45,14 +54,20 @@ class _ChooseLocationState extends State<ChooseLocation> with SingleTickerProvid
         child: Center(
           child: Card(
             elevation: 8,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
             margin: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
             child: Padding(
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.location_on, size: 60, color: Colors.blueAccent),
+                  const Icon(
+                    Icons.location_on,
+                    size: 60,
+                    color: Colors.blueAccent,
+                  ),
                   const SizedBox(height: 16),
                   const Text(
                     'Select your city',
@@ -62,15 +77,19 @@ class _ChooseLocationState extends State<ChooseLocation> with SingleTickerProvid
                   DropdownButtonFormField<String>(
                     value: location,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       filled: true,
                       fillColor: Colors.white,
                     ),
                     items: locations
-                        .map((location) => DropdownMenuItem(
-                              value: location,
-                              child: Text(location),
-                            ))
+                        .map(
+                          (location) => DropdownMenuItem(
+                            value: location,
+                            child: Text(location),
+                          ),
+                        )
                         .toList(),
                     onChanged: (value) {
                       setState(() {
@@ -82,12 +101,17 @@ class _ChooseLocationState extends State<ChooseLocation> with SingleTickerProvid
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 12,
+                      ),
                     ),
                     onPressed: () {
                       // Pop the current page and return the selected location
-                      Navigator.pop(context, location);
+                      Navigator.pop(context, {"location": location});
                     },
                     icon: const Icon(Icons.check),
                     label: const Text('Confirm'),
